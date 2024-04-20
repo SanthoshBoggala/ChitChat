@@ -1,0 +1,7 @@
+.newMsg {
+    height: 50px;
+    text-align: center;
+}
+.inputMsg > input {
+    width: 100%;
+}

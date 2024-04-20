@@ -1,0 +1,15 @@
+.chatWindowTop { 
+    display: flex;
+    align-items: center;
+
+    height: 50px;
+    border: 1px solid gray;
+    background-color: violet;
+}
+.chattingBox {
+    padding: 20px;
+    height: 84vh;
+    background-color: aqua;
+
+    overflow: scroll;
+}
