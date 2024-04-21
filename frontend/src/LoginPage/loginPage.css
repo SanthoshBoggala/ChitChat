@@ -1,0 +1,10 @@
+.loginPage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginDiv {
+    background-color: rgb(122, 204, 241);
+    padding: 40px;
+}

@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './singleMsg.css'
 import OwnUser from './OwnUser'
 import OtherUser from './OtherUser'
+import ChatContext from '../../Contexts/chatContext'
 
-const SingleMsg = (msg) => {
+const SingleMsg = ({msg, user}) => {
 
-    const myUser = "santhosh"
+    const { user: ownUser } = useContext(ChatContext)
 
     return (
         <>
-            {msg.user === myUser ? <OwnUser  {...msg} /> : <OtherUser {...msg} />}
+            {ownUser.num == user ? <OwnUser msg={msg} user={user} /> : <OtherUser  msg={msg} user={user} />}
         </>
     )
 }

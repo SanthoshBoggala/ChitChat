@@ -1,43 +1,26 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './chatWindow.css'
 import FriendPic from '../FriendPic/FriendPic'
 import SingleMsg from '../SingleMsg/SingleMsg'
 import NewMsg from '../NewMsg/NewMsg'
+import ChatContext from '../../Contexts/chatContext'
 
 const ChatWindow = () => {
 
-    const user = {
-        name: 'santhosh',
-        pic: "",
-    }
-    const msgs = [
-        {
-          user: "santhosh",
-          msg: "Hi there!",
-        },
-        {
-          user: "hh",
-          msg: "Hey, how are you?",
-        },
-        {
-            user: "santhosh",
-            msg: "Hru?",
-          },
-      ];
-      
+    const { currentChat: { chat: { data }, frnd } } = useContext(ChatContext)
 
     return (
         <div className='chatWindow'>
             <div className='chatWindowTop'>
-                <FriendPic {...user} />
-                <div className='name mx-3'>{user.name}</div>
+                <FriendPic {...frnd} />
+                <div className='name mx-3'>{frnd.name}</div>
             </div>
             <div className='chattingBox'>
-                { msgs && msgs.length !== 0 && (
-                    msgs.map(one => <SingleMsg {...one}/>)
+                { data && data.length !== 0 && (
+                    data.map((one, index) => <SingleMsg {...one} key={index}/>)
                 ) }
             </div>
-            <NewMsg />
+            <NewMsg frnd={frnd}/>
         </div>
     )
 }

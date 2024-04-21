@@ -4,12 +4,28 @@
 
     height: 50px;
     border: 1px solid gray;
-    background-color: violet;
+    color: white;
+    background-color: rgb(34, 130, 143);
 }
 .chattingBox {
     padding: 20px;
-    height: 84vh;
-    background-color: aqua;
+    height: 83vh;
 
-    overflow: scroll;
+    overflow: auto;
+}
+.chattingBox::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.chattingBox::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.chattingBox::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 6px; 
+}
+
+.chattingBox::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }

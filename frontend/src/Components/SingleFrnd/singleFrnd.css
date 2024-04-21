@@ -12,7 +12,6 @@
     cursor: pointer;
 }
 .name {
-    background-color: aqua;
     max-width: 120px;
     overflow: hidden;
 }

@@ -1,12 +1,15 @@
-import { useState } from 'react'
 import ChatPage from './ChatPage/ChatPage'
 import './App.css'
+import { useContext } from 'react'
+import ChatContext from './Contexts/chatContext'
+import LoginPage from './LoginPage/LoginPage'
 
 function App() {
+  const { user } = useContext(ChatContext)
   return (
     <>
-     <ChatPage />
-    </>
+      { user == null ? <LoginPage /> : <ChatPage />}
+    </>      
   )
 }
 

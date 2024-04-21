@@ -3,9 +3,37 @@
     overflow: hidden;
 }
 .switch {
-    height: 45px;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.switch > div {
 }
 .friends {
     height: 93vh;
-    overflow: scroll;
+    border: 1px solid gray;
+    /* overflow: auto;  */
+}
+
+.friends::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.friends::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.friends::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 6px; 
+}
+
+.friends::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+.friendsDiv {
+    position: relative;
+    background-color: #7dbfca;
 }

@@ -1,7 +1,21 @@
 .newMsg {
+    display: flex;
+    align-items: center;
     height: 50px;
     text-align: center;
+    background-color: rgb(128, 195, 231);
 }
 .inputMsg > input {
+    padding-left: 10px;
+    height: 40px;
     width: 100%;
+    border: none;
+    border-radius: 3px;
+}
+.sendMsg > button {
+  border: none;
+  color: white;
+  background-color: rgb(31, 103, 125);
+  border-radius: 3px;
+  padding: 6px 15px;
 }
