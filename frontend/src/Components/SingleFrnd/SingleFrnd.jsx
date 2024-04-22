@@ -5,10 +5,12 @@ import ChatContext from '../../Contexts/chatContext'
 
 const SingleFrnd = ({frnd}) => {
   const { openConvo } = useContext(ChatContext)
+  const { currentChat } = useContext(ChatContext)
 
+  const active = currentChat == null ? false :  currentChat.frnd.num == frnd.num
   return (
     <div 
-      className='singleFrnd'
+      className={ active ? 'singleFrnd' : 'inactive'} 
       onClick={()=> openConvo(frnd) }
     >
       <FriendPic {...frnd}/>

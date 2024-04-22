@@ -1,20 +1,23 @@
-.singleFrnd {
+.singleFrnd, .inactive {
     margin: 0;
     padding: 0;
+    color: white;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: start;
 
     border: 1px solid gray;
-    height: 50px;
+    height: 60px;
     text-align: center;
     cursor: pointer;
+    background-color:  #317b93;
 }
 .name {
     max-width: 120px;
     overflow: hidden;
+    padding-left: 15px;
 }
-.notifi {
-    margin-right: 7px;
+.inactive {
+    background-color:  #75b1d6;
 }

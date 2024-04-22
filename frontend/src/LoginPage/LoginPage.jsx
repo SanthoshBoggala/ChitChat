@@ -21,26 +21,28 @@ const LoginPage = () => {
     return (
         <div className='loginPage'>
             <form onSubmit={submitUser} className='loginDiv'>
-                <h3 className='text-center mb-3'>Login/Register</h3>
+                <h1 className='text-center brand mb-3'>Chit Chat </h1>
+                <h3 className='text-center brandDown mb-2'>Login/Register</h3>
                 <div>Name: </div>
                 <input 
                     name='name'
                     placeholder='Name...'
                     ref={nameRef}
-                    className='my-3'
                 />
                 <div>Mobile Number: </div>
                 <input 
                     name='phone'
                     placeholder='Mobile number...'
                     ref={numRef}
-                    className='my-3'
                 /> <br />
-                <button 
-                    className='btn btn-success'
+                <div
+                    className="loginBtn"
                 >
-                    Login
-                </button>
+                    <button 
+                    >
+                        Login
+                    </button>
+                </div>
             </form>
         </div>
     )

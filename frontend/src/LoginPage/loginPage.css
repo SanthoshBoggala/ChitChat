@@ -3,8 +3,42 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #1e272e; 
 }
 .loginDiv {
-    background-color: rgb(122, 204, 241);
+    background-color: #34495e; 
+    color: #ecf0f1; 
     padding: 40px;
+    border-radius: 5px;
+}
+
+.loginDiv > input {
+    color: #3c5b6f; 
+    height: 35px;
+    border-radius: 3px;
+}
+.loginDiv > div {
+    margin: 10px 0px;
+    font-size: 14px;
+}
+.loginBtn {
+    text-align: center;
+}
+.loginBtn > button {
+    background-color: #152c3b; 
+    border: none;
+    border-radius: 2px;
+    letter-spacing: 2px;
+    padding: 10px 20px;
+    color: #ecf0f1;
+}
+.brand {
+    font-size: 40px;
+    letter-spacing: 2px;
+    font-family: 'Segoe UI', Tahoma;
+}
+.brandDown {
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 20px;
 }

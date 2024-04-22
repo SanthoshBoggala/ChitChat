@@ -28,7 +28,9 @@ io.on('connection', (socket) => {
     socket.on("sendMsg", (user, frnd, msg) => {
         const toFrnd = users.find(one => one.num == frnd.num)
 
-        socket.to(toFrnd.id).emit("getMsg",user, frnd, msg)
+        if(toFrnd){
+            socket.to(toFrnd.id).emit("getMsg",user, frnd, msg)
+        }
     })
 
 

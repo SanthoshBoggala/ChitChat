@@ -2,6 +2,8 @@
 }
 .modal-content {
     color: white;
-    background-color: #24a9c0; /* Grey background */
+    background-color: #455b71; 
 }
-
+.addOne {
+    background-color: #2a435b;
+}

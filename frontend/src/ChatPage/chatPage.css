@@ -5,12 +5,17 @@
 .switch {
     height: 50px;
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
 }
 .switch > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+.active {
+    background-color: rgb(103, 107, 108) ;
+    color: white;
+}
+
 .friends {
     height: 93vh;
     border: 1px solid gray;
@@ -35,5 +40,4 @@
 }
 .friendsDiv {
     position: relative;
-    background-color: #7dbfca;
 }

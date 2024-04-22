@@ -44,7 +44,7 @@ const AddFriendModal = ({ show, handleClose }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleAddButtonClick}>
+                <Button className='addOne' onClick={handleAddButtonClick}>
                     Add Friend
                 </Button>
             </Modal.Footer>

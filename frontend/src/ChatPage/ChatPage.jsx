@@ -14,9 +14,9 @@ const ChatPage = () => {
         <div className='chatPage'>
             <div className='row g-0'>
                 <div className='col-4 col-md-3 friendsDiv'>
-                    <div className='switch'>
-                        <div>Friends</div>
-                        <div>Groups</div>
+                    <div className='switch row'>
+                        <div className='col-6 active' >Friends</div>
+                        <div className='col-6' >Groups</div>
                     </div>
                     <div className='friends'>
                         <Friends />
