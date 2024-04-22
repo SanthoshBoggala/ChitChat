@@ -11,6 +11,11 @@
     justify-content: center;
     align-items: center;
 }
+.logOut {
+    margin-left: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
 .active {
     background-color: rgb(103, 107, 108) ;
     color: white;

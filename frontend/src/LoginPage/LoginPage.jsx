@@ -1,21 +1,18 @@
 import React, { useContext, useRef } from 'react'
 import './loginPage.css'
-import ChatContext from '../Contexts/chatContext'
+import UserContext from '../Contexts/userContext'
 
 const LoginPage = () => {
-    const { socket } = useContext(ChatContext)
     const nameRef = useRef()
     const numRef = useRef()
 
-    const { setUser } = useContext(ChatContext)
+    const { setNewUser } = useContext(UserContext)
 
     const submitUser = (e)=>{
         e.preventDefault()
 
         if(nameRef.current.value !== "" && numRef.current.value !== ""){
-            const u = { name: nameRef.current.value, num: numRef.current.value }
-            setUser(u)
-            socket.emit("user", u)
+            setNewUser(nameRef.current.value, numRef.current.value)
         }
     }
     return (

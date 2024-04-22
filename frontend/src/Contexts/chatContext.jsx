@@ -1,15 +1,19 @@
-import { createContext, useEffect, useState } from "react"
-import { io } from 'socket.io-client'
+import { createContext, useContext, useEffect, useState } from "react"
+import useLocalStorage from "../Hooks/useLocalStorage"
+import userContext from "./userContext"
 
-const socket = io('http://localhost:3000')
+
+
 const ChatContext = createContext()
 export default ChatContext
 
 export const ChatContextProvider = ({ children })=>{
-    const [user, setUser] = useState(null)
+    const { user, setNewUser, socket } = useContext(userContext)
+
     const [currentChat, setCurrentChat] = useState(null)
-    const [friends, setFriends] = useState([])
-    const [allconvo, setAllconvo] = useState([])
+    const friendsLocalStorageKey = user ? `friends-${user.num}` : "friends"
+    const [friends, setFriends] = useLocalStorage({ key: friendsLocalStorageKey, initialValue: []})
+    const [allconvo, setAllconvo] = useLocalStorage({ key: `${'allconvos'+user.num}` , initialValue: [] })
 
     const addFriend = (num, name) => {
         setFriends(prev =>{
@@ -21,15 +25,22 @@ export const ChatContextProvider = ({ children })=>{
         })
     }
 
-    console.log(allconvo)
+    const logOut = () =>{
+        const key = "chitChat-user"
+        localStorage.removeItem(key)
+
+        setNewUser("", "")
+        setCurrentChat(null)
+        setFriends([])
+        setAllconvo([])
+    }
 
     useEffect(()=>{
         socket.on("getMsg", (frnd, user, msg)=>{
-            console.log("server", frnd, user, msg)
 
             setAllconvo(prev => {
                 const convoKey = `${user.num}-${frnd.num}`
-                console.log("con", convoKey)
+
                 return prev.map(one => {
                     if(one.convoKey === convoKey){
                         
@@ -44,10 +55,11 @@ export const ChatContextProvider = ({ children })=>{
     }, [])
 
     const sendMsg = (frnd, msg)=>{
+        console.log(frnd, msg, user)
+
         socket.emit("sendMsg",user, frnd, msg)
         setAllconvo(prev => {
             const convoKey = `${user.num}-${frnd.num}`
-            console.log(convoKey, frnd)
             return prev.map(one => {
                 if(one.convoKey === convoKey){
                     
@@ -65,9 +77,9 @@ export const ChatContextProvider = ({ children })=>{
         setCurrentChat({frnd, chat: allconvo.find(one => one.convoKey === convoKey)})
     }
 
-    const values = {currentChat, openConvo, setUser,
-             user, socket, friends, addFriend,
-             sendMsg, setAllconvo }
+    const values = {currentChat, openConvo,
+             socket, friends, addFriend,
+             sendMsg, setAllconvo, logOut }
 
     return(
         <ChatContext.Provider value={ values }>

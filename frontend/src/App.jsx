@@ -1,14 +1,19 @@
 import ChatPage from './ChatPage/ChatPage'
 import './App.css'
 import { useContext } from 'react'
-import ChatContext from './Contexts/chatContext'
 import LoginPage from './LoginPage/LoginPage'
+import UserContext from './Contexts/userContext'
+import { ChatContextProvider } from './Contexts/chatContext'
 
 function App() {
-  const { user } = useContext(ChatContext)
+  const { user } = useContext(UserContext)
   return (
     <>
-      { user == null ? <LoginPage /> : <ChatPage />}
+      { user == null ? <LoginPage /> :
+        <ChatContextProvider>
+          <ChatPage />
+        </ChatContextProvider>
+      }
     </>      
   )
 }

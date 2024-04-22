@@ -22,13 +22,13 @@ io.on('connection', (socket) => {
         }
 
         users.push(newUser)
-        console.log(users)
     })
 
     socket.on("sendMsg", (user, frnd, msg) => {
         const toFrnd = users.find(one => one.num == frnd.num)
-
+        console.log(toFrnd, "kjhkj")
         if(toFrnd){
+            console.log(toFrnd)
             socket.to(toFrnd.id).emit("getMsg",user, frnd, msg)
         }
     })
@@ -46,6 +46,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log('Server listening on port 3000...');
+server.listen(3001, () => {
+    console.log('Server listening on port 3001...');
 });

@@ -7,7 +7,7 @@ import ChatContext from '../../Contexts/chatContext'
 
 const ChatWindow = () => {
 
-    const { currentChat: { chat: { data }, frnd } } = useContext(ChatContext)
+    const { currentChat: { chat , frnd } } = useContext(ChatContext)
 
     return (
         <div className='chatWindow'>
@@ -16,8 +16,8 @@ const ChatWindow = () => {
                 <div className='name mx-3'>{frnd.name}</div>
             </div>
             <div className='chattingBox'>
-                { data && data.length !== 0 && (
-                    data.map((one, index) => <SingleMsg {...one} key={index}/>)
+                { (chat && chat.data && chat.data.length !== 0) && (
+                    chat.data.map((one, index) => <SingleMsg {...one} key={index}/>)
                 ) }
             </div>
             <NewMsg frnd={frnd}/>

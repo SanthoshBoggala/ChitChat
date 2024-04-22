@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import './singleMsg.css'
 import OwnUser from './OwnUser'
 import OtherUser from './OtherUser'
-import ChatContext from '../../Contexts/chatContext'
+import UserContext from '../../Contexts/userContext'
 
 const SingleMsg = ({msg, user}) => {
 
-    const { user: ownUser } = useContext(ChatContext)
+    const { user: ownUser } = useContext(UserContext)
 
     return (
         <>
