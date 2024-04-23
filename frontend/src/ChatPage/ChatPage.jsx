@@ -8,22 +8,34 @@ import UserContext from '../Contexts/userContext'
 
 
 const ChatPage = () => {
-    const { currentChat, logOut } = useContext(ChatContext)
+    const { currentChat, active, toggleActive, logOut } = useContext(ChatContext)
     const { user } = useContext(UserContext)
 
     return (
         <div className='chatPage'>
             <div className='row g-0'>
-                <div className='col-4 col-md-3 friendsDiv'>
-                    <div className='switch row'>
-                        <div className='col-6 active' >Friends</div>
-                        <div className='col-6' >Groups
-                            <div 
-                                className='logOut'
-                                onClick={()=> logOut()}
-                            >
-                                {"<<"}
-                            </div>
+                <div className='sideBar col-1'>
+                    <div>@</div>
+                    <div 
+                        className='logOut'
+                        onClick={()=> logOut()}
+                    >
+                        {"<<"}
+                    </div>
+                </div>
+                <div className='col-3 col-md-2 friendsDiv'>
+                    <div className='switch row g-0'>
+                        <div 
+                            className = {active ? 'active col-6' : 'col-6'}
+                            onClick={()=> toggleActive()} 
+                        >
+                            Friends
+                        </div>
+                        <div 
+                            className = {!active ? 'active col-6' : 'col-6'} 
+                            onClick={()=> toggleActive()} 
+                        >
+                            Groups
                         </div>
                     </div>
                     <div className='friends'>

@@ -3,22 +3,20 @@ import './singleFrnd.css'
 import FriendPic from '../FriendPic/FriendPic'
 import ChatContext from '../../Contexts/chatContext'
 
-const SingleFrnd = ({frnd}) => {
+const SingleFrnd = ({frnds}) => {
   const { openConvo } = useContext(ChatContext)
   const { currentChat } = useContext(ChatContext)
 
-  const active = currentChat == null ? false :  currentChat.frnd.num == frnd.num
+  const active = currentChat == null ? false :  currentChat.frnd[0].num == frnds[0].num
+  console.log("fr open", frnds)
   return (
     <div 
       className={ active ? 'singleFrnd' : 'inactive'} 
-      onClick={()=> openConvo(frnd) }
+      onClick={()=> openConvo(frnds) }
     >
-      <FriendPic {...frnd}/>
+      <FriendPic {...frnds}/>
       <div className='name'>
-        {frnd.name}
-      </div>
-      <div className='notifi'>
-        23
+        {frnds[0].name}
       </div>
     </div>
   )

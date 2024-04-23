@@ -11,6 +11,7 @@ io.on('connection', (socket) => {
     console.log('A new client connected:', socket.id);
 
     socket.on("user", (user) => {
+        if(!user) return
         const userExists = users.findIndex(one => one.num == user.num)
         let newUser = {
                     num: user.num,
@@ -24,12 +25,20 @@ io.on('connection', (socket) => {
         users.push(newUser)
     })
 
-    socket.on("sendMsg", (user, frnd, msg) => {
-        const toFrnd = users.find(one => one.num == frnd.num)
-        console.log(toFrnd, "kjhkj")
-        if(toFrnd){
-            console.log(toFrnd)
-            socket.to(toFrnd.id).emit("getMsg",user, frnd, msg)
+    socket.on("sendMsg", (user, frnds, msg) => {
+
+        const toFrnds = users.filter(one =>{
+
+            const isUser = frnds.find(frnd => frnd.num == one.num)
+            if(isUser) return true
+            else false
+        })
+
+        const frndsIds = toFrnds.map(one => one.id)
+        console.log(frndsIds)
+
+        if(toFrnds.length != 0){
+            socket.to(frndsIds).emit("getMsg",user, frnds, msg)
         }
     })
 

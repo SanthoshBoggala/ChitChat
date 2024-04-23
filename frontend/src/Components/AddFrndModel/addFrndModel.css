@@ -2,8 +2,44 @@
 }
 .modal-content {
     color: white;
-    background-color: #455b71; 
+    background-color: #236477; 
 }
 .addOne {
     background-color: #2a435b;
+}
+.frndsList {
+    margin: 10px 0px;
+    height: 300px;
+    overflow: auto;
+}
+.search {
+    text-align: center;
+    width: 250px;
+}
+.checkboxDiv {
+    margin-bottom: 5px;
+    text-align: center;
+}
+.checkboxDiv > input {
+
+}
+.checkboxDiv > span {
+    margin-left: 15px;
+    font-size: 20px;
+}
+.frndsList::-webkit-scrollbar {
+    width: 12px; 
+}
+
+.frndsList::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.frndsList::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 6px; 
+}
+
+.frndsList::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }

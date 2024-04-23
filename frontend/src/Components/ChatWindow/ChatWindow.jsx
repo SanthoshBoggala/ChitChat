@@ -13,14 +13,14 @@ const ChatWindow = () => {
         <div className='chatWindow'>
             <div className='chatWindowTop'>
                 <FriendPic {...frnd} />
-                <div className='name mx-3'>{frnd.name}</div>
+                <div className='name mx-3'>{frnd[0].name}</div>
             </div>
             <div className='chattingBox'>
                 { (chat && chat.data && chat.data.length !== 0) && (
                     chat.data.map((one, index) => <SingleMsg {...one} key={index}/>)
                 ) }
             </div>
-            <NewMsg frnd={frnd}/>
+            <NewMsg frnds={frnd}/>
         </div>
     )
 }

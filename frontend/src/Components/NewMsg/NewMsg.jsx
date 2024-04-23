@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react'
 import './newMsg.css'
 import ChatContext from '../../Contexts/chatContext'
 
-const NewMsg = ({frnd}) => {
+const NewMsg = ({frnds}) => {
     const [newMsg, setNewMsg] = useState("")
     const { sendMsg} = useContext(ChatContext)
 
     const sendMsgTo = ()=>{
-        sendMsg(frnd, newMsg)
+        sendMsg(frnds, newMsg)
         setNewMsg("")
     }
 

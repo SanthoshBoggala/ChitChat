@@ -10,17 +10,40 @@ export default ChatContext
 export const ChatContextProvider = ({ children })=>{
     const { user, setNewUser, socket } = useContext(userContext)
 
-    const [currentChat, setCurrentChat] = useState(null)
-    const friendsLocalStorageKey = user ? `friends-${user.num}` : "friends"
-    const [friends, setFriends] = useLocalStorage({ key: friendsLocalStorageKey, initialValue: []})
-    const [allconvo, setAllconvo] = useLocalStorage({ key: `${'allconvos'+user.num}` , initialValue: [] })
+    const [active, setActive] = useLocalStorage({ key: `active-${user.num}`, initialValue: true })
+    const [currentChat, setCurrentChat] = useLocalStorage({ key: `currentChat-${user.num}`, initialValue: null })
+    const [friends, setFriends] = useLocalStorage({ key: `friends-${user.num}`, initialValue: []})
+    const [groups, setGroups] = useLocalStorage({ key: `groups-${user.num}`, initialValue: []})
+    const [allconvo, setAllconvo] = useLocalStorage({ key: `allconvos-${user.num}` , initialValue: [] })
+
+
+    const toggleActive = ()=>{
+        setActive(prev => !prev)
+        setCurrentChat(null)
+    }
 
     const addFriend = (num, name) => {
         setFriends(prev =>{
             if(!prev.find(one => one.num == num)){
                 const convoKey = `${user.num}-${num}`
                 setAllconvo((prev) => [...prev, { convoKey, data: [] }])
-                return [...prev, { name, num }]
+                return [...prev, [{ name, num }]]
+            }
+        })
+    }
+
+    const addGroup = (frnds, grpName) =>{
+        setGroups(prev => {
+            const temp = frnds.map(one => one[0])
+            if(prev.includes(temp)){
+                return prev
+            } else {
+                const key = temp.map(one => one.num).join("")
+                const convoKey = `${user.num}-${key}`
+                setAllconvo(prev => [...prev,  { convoKey, data: [] } ])
+
+                temp.unshift({name: grpName, num: ""})
+                return [...prev, temp]
             }
         })
     }
@@ -36,10 +59,13 @@ export const ChatContextProvider = ({ children })=>{
     }
 
     useEffect(()=>{
-        socket.on("getMsg", (frnd, user, msg)=>{
+
+        const handleGetMsg =  (frnd, user, msg)=>{
+            console.log(frnd, user, msg)
+            const key = user.map(one => one.num).join("")
 
             setAllconvo(prev => {
-                const convoKey = `${user.num}-${frnd.num}`
+                const convoKey = `${key}-${frnd.num}`
 
                 return prev.map(one => {
                     if(one.convoKey === convoKey){
@@ -51,15 +77,21 @@ export const ChatContextProvider = ({ children })=>{
                     return one
                 })
             })
-        })
-    }, [])
+        }
+        socket.on("getMsg", handleGetMsg)
 
-    const sendMsg = (frnd, msg)=>{
-        console.log(frnd, msg, user)
+        return ()=>{
+            socket.off("getMsg", handleGetMsg)
+        }
+    }, [socket])
 
-        socket.emit("sendMsg",user, frnd, msg)
+    const sendMsg = (frnds, msg)=>{
+        
+        socket.emit("sendMsg",user, frnds, msg)
+
         setAllconvo(prev => {
-            const convoKey = `${user.num}-${frnd.num}`
+            const key = frnds.map(one => one.num).join("")
+            const convoKey = `${user.num}-${key}`
             return prev.map(one => {
                 if(one.convoKey === convoKey){
                     
@@ -70,16 +102,21 @@ export const ChatContextProvider = ({ children })=>{
                 return one
             })
         })
+
     }
 
-    const openConvo = (frnd)=>{
-        const convoKey = `${user.num}-${frnd.num}`
-        setCurrentChat({frnd, chat: allconvo.find(one => one.convoKey === convoKey)})
+    const openConvo = (frnds)=>{
+        const key = frnds.map( one => one.num ).join("")
+
+        const convoKey = `${user.num}-${key}`
+        const chats = allconvo.find(one => one.convoKey === convoKey)
+        setCurrentChat({frnd: frnds, chat: chats ? chats : [] })
     }
 
     const values = {currentChat, openConvo,
              socket, friends, addFriend,
-             sendMsg, setAllconvo, logOut }
+             sendMsg, setAllconvo, logOut, active, toggleActive,
+             groups, addGroup }
 
     return(
         <ChatContext.Provider value={ values }>

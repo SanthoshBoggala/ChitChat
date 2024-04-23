@@ -2,18 +2,29 @@
     height: 100vh;
     overflow: hidden;
 }
+.sideBar {
+    width: 30px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(14, 81, 91);
+    height: 100vh;
+}
+.sideBar > div {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
 .switch {
-    height: 50px;
-    width: 100%;
+    height: 50px; 
 }
 .switch > div {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 .logOut {
-    margin-left: 10px;
-    font-size: 25px;
     cursor: pointer;
 }
 .active {
