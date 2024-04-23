@@ -60,9 +60,14 @@ export const ChatContextProvider = ({ children })=>{
 
     useEffect(()=>{
 
-        const handleGetMsg =  (frnd, user, msg)=>{
-            console.log(frnd, user, msg)
+        const handleGetMsg =  (frnd, user, msg, ack)=>{
+
             const key = user.map(one => one.num).join("")
+
+            console.log(ack)
+            if(ack && typeof ack === "function"){
+                ack("recieved...")
+            }
 
             setAllconvo(prev => {
                 const convoKey = `${key}-${frnd.num}`
@@ -86,7 +91,7 @@ export const ChatContextProvider = ({ children })=>{
     }, [socket])
 
     const sendMsg = (frnds, msg)=>{
-        
+
         socket.emit("sendMsg",user, frnds, msg)
 
         setAllconvo(prev => {

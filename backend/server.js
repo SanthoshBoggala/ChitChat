@@ -38,7 +38,9 @@ io.on('connection', (socket) => {
         console.log(frndsIds)
 
         if(toFrnds.length != 0){
-            socket.to(frndsIds).emit("getMsg",user, frnds, msg)
+            socket.to(frndsIds).emit("getMsg",user, frnds, msg,  (ack) => {
+                console.log("Acknowledgment from receiver:", ack);
+            })
         }
     })
 
@@ -46,12 +48,7 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Client disconnected:', socket.id);
 
-        setTimeout(() => {
-            const index = users.findIndex(user => user.id === socket.id);
-            if (index !== -1) {
-                users.splice(index, 1);
-            }
-        }, 5000);
+        users.findIndex(user => user.id === socket.id);
     });
 });
 
