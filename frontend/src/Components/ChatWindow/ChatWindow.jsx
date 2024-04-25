@@ -7,7 +7,15 @@ import ChatContext from '../../Contexts/chatContext'
 
 const ChatWindow = () => {
 
-    const { currentChat: { chat , frnd } } = useContext(ChatContext)
+    const { currentChat: { convoKey, frnd }, allconvo } = useContext(ChatContext)
+    const [chat, setChat] = useState([])
+
+    useEffect(()=>{
+
+        const updatedChat = allconvo.find(one => one.convoKey == convoKey);
+        setChat(updatedChat);
+
+    }, [allconvo, convoKey])
 
     return (
         <div className='chatWindow'>

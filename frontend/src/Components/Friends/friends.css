@@ -1,18 +1,18 @@
 .addFriend {
     position: absolute;
-    bottom: 2%;
-    right: 2%;
+    bottom: 3%;
+    right: 3%;
 }
 .addFriend > div {
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 35px;
+    font-size: 25px;
     font-family: sans-serif;
     background-color: rgb(29, 122, 143);
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
     cursor: pointer;
 }

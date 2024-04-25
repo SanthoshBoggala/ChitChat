@@ -12,10 +12,12 @@
     font-size: 18px;
     padding: 5px 20px;
     color: white;
-    background-color: rgb(52, 145, 165);
-    border: 1px solid rgb(94, 94, 94);
     border-radius: 20px;
-
     position: relative;
-
+}
+.colorBox {
+    background-color: rgb(24, 106, 124);
+}
+.otherColorBox {
+    background-color: rgb(37, 156, 183);
 }

@@ -1,54 +1,56 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect } from "react"
 import useLocalStorage from "../Hooks/useLocalStorage"
 import userContext from "./userContext"
-
+import sha256 from 'js-sha256'
 
 
 const ChatContext = createContext()
 export default ChatContext
 
-export const ChatContextProvider = ({ children })=>{
+export const ChatContextProvider = ({ children }) => {
     const { user, setNewUser, socket } = useContext(userContext)
 
     const [active, setActive] = useLocalStorage({ key: `active-${user.num}`, initialValue: true })
     const [currentChat, setCurrentChat] = useLocalStorage({ key: `currentChat-${user.num}`, initialValue: null })
-    const [friends, setFriends] = useLocalStorage({ key: `friends-${user.num}`, initialValue: []})
-    const [groups, setGroups] = useLocalStorage({ key: `groups-${user.num}`, initialValue: []})
-    const [allconvo, setAllconvo] = useLocalStorage({ key: `allconvos-${user.num}` , initialValue: [] })
+    const [friends, setFriends] = useLocalStorage({ key: `friends-${user.num}`, initialValue: [] })
+    const [groups, setGroups] = useLocalStorage({ key: `groups-${user.num}`, initialValue: [] })
+    const [allconvo, setAllconvo] = useLocalStorage({ key: `allconvos-${user.num}`, initialValue: [] })
 
 
-    const toggleActive = ()=>{
+    const toggleActive = () => {
         setActive(prev => !prev)
         setCurrentChat(null)
     }
 
     const addFriend = (num, name) => {
-        setFriends(prev =>{
-            if(!prev.find(one => one.num == num)){
-                const convoKey = `${user.num}-${num}`
+        setFriends(prev => {
+            if (!prev.find(one => one.num == num)) {
+                const convoKey = generateKey([user, { num, name }])
+
+                console.log(convoKey)
+
                 setAllconvo((prev) => [...prev, { convoKey, data: [] }])
                 return [...prev, [{ name, num }]]
             }
         })
     }
 
-    const addGroup = (frnds, grpName) =>{
+    const addGroup = (frnds, grpName) => {
         setGroups(prev => {
             const temp = frnds.map(one => one[0])
-            if(prev.includes(temp)){
+            if (prev.includes(temp)) {
                 return prev
             } else {
-                const key = temp.map(one => one.num).join("")
-                const convoKey = `${user.num}-${key}`
-                setAllconvo(prev => [...prev,  { convoKey, data: [] } ])
+                const convoKey = generateKey([user, ...temp])
+                setAllconvo(prev => [...prev, { convoKey, data: [] }])
 
-                temp.unshift({name: grpName, num: ""})
+                temp.unshift({ name: grpName, num: "" })
                 return [...prev, temp]
             }
         })
     }
 
-    const logOut = () =>{
+    const logOut = () => {
         const key = "chitChat-user"
         localStorage.removeItem(key)
 
@@ -58,51 +60,78 @@ export const ChatContextProvider = ({ children })=>{
         setAllconvo([])
     }
 
-    useEffect(()=>{
+    console.log("allconvo", allconvo)
+    console.log("frnnds", friends)
+    useEffect(() => {
 
-        const handleGetMsg =  (frnd, user, msg, ack)=>{
+        const handleGetMsg = ({ user: sender, frnds, msg }) => {
 
-            const key = user.map(one => one.num).join("")
-
-            console.log(ack)
-            if(ack && typeof ack === "function"){
-                ack("recieved...")
-            }
+            const convoKey = generateKey([sender, ...frnds])
 
             setAllconvo(prev => {
-                const convoKey = `${key}-${frnd.num}`
 
-                return prev.map(one => {
-                    if(one.convoKey === convoKey){
-                        
-                        const newData = one.data
-                        newData.push({ user: frnd.num, msg })
-                        return {...one, data: newData}
+                const found = prev.findIndex(one => one.convoKey == convoKey)
+
+                console.log(found)
+
+                if (found !== -1) {
+                    return prev.map(one => {
+                        if(one.convoKey == convoKey){
+                            return ({
+                                ...one,
+                                data: [...one.data, { user: sender.num, msg} ]
+                            })
+                        }
+                        return one
+                    })
+                }
+                else{
+                    const grp = frnds.filter(one => one.num !== user.num)
+
+                    const newConvo = {
+                        convoKey,
+                        data: [{ user: sender.num, msg }]
                     }
-                    return one
-                })
+                    
+                    if(frnds.length > 2){
+                        setGroups(prevGrps =>{
+                            const newGrp =  [...grp, sender]
+                            console.log(newGrp)
+                            if(prevGrps && prevGrps.includes(newGrp)) return prevGrps
+                            else return [...prevGrps, newGrp]
+                        })
+                    } else {
+                        console.log(sender)
+
+                        setFriends(old => [...old, [sender]] )
+                    }
+
+                    return [...prev, newConvo]
+                }
             })
+
         }
         socket.on("getMsg", handleGetMsg)
 
-        return ()=>{
+
+        return () => {
             socket.off("getMsg", handleGetMsg)
         }
     }, [socket])
 
-    const sendMsg = (frnds, msg)=>{
+    const sendMsg = (frnds, msg) => {
 
-        socket.emit("sendMsg",user, frnds, msg)
+        socket.emit("sendMsg", { user, frnds, msg })
 
         setAllconvo(prev => {
-            const key = frnds.map(one => one.num).join("")
-            const convoKey = `${user.num}-${key}`
+            const convoKey = generateKey([user, ...frnds])
+
             return prev.map(one => {
-                if(one.convoKey === convoKey){
-                    
+                if (one.convoKey === convoKey) {
+
                     const newData = one.data
                     newData.push({ user: user.num, msg })
-                    return {...one, data: newData}
+                    return { ...one, data: newData }
                 }
                 return one
             })
@@ -110,22 +139,35 @@ export const ChatContextProvider = ({ children })=>{
 
     }
 
-    const openConvo = (frnds)=>{
-        const key = frnds.map( one => one.num ).join("")
+    const openConvo = (frnds) => {
 
-        const convoKey = `${user.num}-${key}`
-        const chats = allconvo.find(one => one.convoKey === convoKey)
-        setCurrentChat({frnd: frnds, chat: chats ? chats : [] })
+        const convoKey = generateKey([user, ...frnds])
+
+        setCurrentChat({ frnd: frnds, convoKey })
     }
 
-    const values = {currentChat, openConvo,
-             socket, friends, addFriend,
-             sendMsg, setAllconvo, logOut, active, toggleActive,
-             groups, addGroup }
+    const values = {
+        currentChat, openConvo,
+        socket, friends, addFriend,
+        sendMsg, setAllconvo, logOut, active, toggleActive,
+        groups, addGroup, allconvo
+    }
 
-    return(
-        <ChatContext.Provider value={ values }>
-            { children }
+    return (
+        <ChatContext.Provider value={values}>
+            {children}
         </ChatContext.Provider>
     )
+}
+
+
+const generateKey = (multiUsers) => {
+
+    const sortedNums = multiUsers.map(one => one.num).sort((a, b) => a - b)
+    const concatNums = sortedNums.join("")
+
+    const hash = sha256.create()
+    hash.update(concatNums)
+
+    return hash.hex()
 }

@@ -5,12 +5,15 @@
     text-align: center;
     background-color: rgb(128, 196, 232);
 }
+.inputMsg {
+  padding-left: 20px;
+}
 .inputMsg > input {
-    padding-left: 10px;
+    width: 100%;
     height: 40px;
-    width: 90%;
+    padding-left: 10px;
     border: none;
-    border-radius: 3px;
+    border-radius: 40px;
 }
 .sendMsg > button {
   border: none;

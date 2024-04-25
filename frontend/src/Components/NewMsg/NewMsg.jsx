@@ -4,18 +4,17 @@ import ChatContext from '../../Contexts/chatContext'
 
 const NewMsg = ({frnds}) => {
     const [newMsg, setNewMsg] = useState("")
-    const { sendMsg} = useContext(ChatContext)
+    const { sendMsg } = useContext(ChatContext)
 
     const sendMsgTo = ()=>{
-        sendMsg(frnds, newMsg)
-        setNewMsg("")
+        if(newMsg.length !== 0){
+            sendMsg(frnds, newMsg)
+            setNewMsg("")
+        }
     }
 
     return (
         <div className='newMsg row g-0'>
-            <div className='col-1 fileAttachment'>
-                K
-            </div>
             <div className='col-10 inputMsg'>
                 <input
                     name='newMsg'
@@ -24,7 +23,7 @@ const NewMsg = ({frnds}) => {
                     onChange={(e)=> setNewMsg(e.target.value)}
                 />
             </div>
-            <div className='col-1 sendMsg'>
+            <div className='col-2 sendMsg'>
                 <button
                     onClick={sendMsgTo}
                 >

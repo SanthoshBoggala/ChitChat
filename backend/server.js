@@ -6,8 +6,11 @@ const server = http.createServer();
 const io = socketIO(server, { cors: { origin: "*" } });
 
 const users = []
+const sendMsgs = []
+const unSendMsgs = []
 
 io.on('connection', (socket) => {
+
     console.log('A new client connected:', socket.id);
 
     socket.on("user", (user) => {
@@ -25,30 +28,54 @@ io.on('connection', (socket) => {
         users.push(newUser)
     })
 
-    socket.on("sendMsg", (user, frnds, msg) => {
+    socket.on("sendMsg", ({user, frnds, msg}) => {
 
-        const toFrnds = users.filter(one =>{
+        let grpName = {}
+        if(frnds.length > 2){
+            grpName = frnds.shift()
+        }
 
-            const isUser = frnds.find(frnd => frnd.num == one.num)
-            if(isUser) return true
-            else false
+        const toFrnds = frnds.map(one => {
+            const found = users.find(d => d.num == one.num)
+    
+            if(found){
+                sendMsgs.push({
+                    from: user,
+                    to: one,
+                    msg,
+                    date: Date.now()
+                })
+                return found
+            }
+            else{
+                unSendMsgs.push({
+                    from: user,
+                    to: one,
+                    msg,
+                    date: Date.now()
+                })
+                return one
+            }
         })
 
-        const frndsIds = toFrnds.map(one => one.id)
-        console.log(frndsIds)
+        const frndsIds = toFrnds
+        .map(one => one.id)
+        .filter(id => id !== undefined)
 
-        if(toFrnds.length != 0){
-            socket.to(frndsIds).emit("getMsg",user, frnds, msg,  (ack) => {
-                console.log("Acknowledgment from receiver:", ack);
-            })
+        console.log(unSendMsgs, frndsIds)
+
+        if(frnds.length > 0){
+            frnds.unshift(grpName)
+        }
+
+        if(frndsIds.length != 0){
+            socket.to(frndsIds).emit("getMsg",{ user, frnds, msg }) 
         }
     })
 
 
     socket.on('disconnect', () => {
         console.log('Client disconnected:', socket.id);
-
-        users.findIndex(user => user.id === socket.id);
     });
 });
 

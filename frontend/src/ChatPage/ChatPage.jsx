@@ -14,37 +14,43 @@ const ChatPage = () => {
     return (
         <div className='chatPage'>
             <div className='row g-0'>
-                <div className='sideBar col-1'>
-                    <div>@</div>
-                    <div 
-                        className='logOut'
-                        onClick={()=> logOut()}
-                    >
-                        {"<<"}
-                    </div>
-                </div>
-                <div className='col-3 col-md-2 friendsDiv'>
-                    <div className='switch row g-0'>
-                        <div 
-                            className = {active ? 'active col-6' : 'col-6'}
-                            onClick={()=> toggleActive()} 
-                        >
-                            Friends
+                <div className='col-4 col-md-3 friendsDiv'>
+                    <div className='friendsOutline'>
+                        <div className='sideBar'>
+                            <div>@</div>
+                            <div
+                                className='logOut'
+                                onClick={() => logOut()}
+                            >
+                                {"<<"}
+                            </div>
                         </div>
-                        <div 
-                            className = {!active ? 'active col-6' : 'col-6'} 
-                            onClick={()=> toggleActive()} 
-                        >
-                            Groups
+                        <div className='friendsInside'>
+                            <div className='switch row g-0'>
+                                <div
+                                    className={active ? 'active col-6' : 'col-6'}
+                                    onClick={() => toggleActive()}
+                                >
+                                    Friends
+                                </div>
+                                <div
+                                    className={!active ? 'active col-6' : 'col-6'}
+                                    onClick={() => toggleActive()}
+                                >
+                                    Groups
+                                </div>
+                            </div>
+                            <div className='friends'>
+                                <Friends />
+                            </div>
                         </div>
-                    </div>
-                    <div className='friends'>
-                        <Friends />
                     </div>
                 </div>
                 <div className='col-8 col-md-9'>
-                    { (currentChat !== null && user) ? <ChatWindow /> : (
-                        <></>
+                    {(currentChat !== null && user) ? <ChatWindow /> : (
+                        <div className='noConvo'>
+                            Open a convo to <span className='p-2'> continue</span> Chatting...
+                        </div>
                     )}
                 </div>
             </div>

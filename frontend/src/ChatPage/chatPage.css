@@ -2,8 +2,15 @@
     height: 100vh;
     overflow: hidden;
 }
+.friendsOutline {
+    display: flex;
+    flex-direction: row;
+}
+.friendsInside {
+    width: 100%;
+}
 .sideBar {
-    width: 30px;
+    width: 40px;
     color: white;
     display: flex;
     flex-direction: column;
@@ -31,13 +38,24 @@
     background-color: rgb(103, 107, 108) ;
     color: white;
 }
-
+.friendsDiv {
+    position: relative;
+    border: 1px solid gray;
+}
 .friends {
     height: 93vh;
     border: 1px solid gray;
-    /* overflow: auto;  */
+    overflow: auto; 
 }
 
+.noConvo {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    font-family: sans-serif;
+}
 .friends::-webkit-scrollbar {
     width: 12px; 
 }
@@ -54,6 +72,4 @@
 .friends::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
-.friendsDiv {
-    position: relative;
-}
+

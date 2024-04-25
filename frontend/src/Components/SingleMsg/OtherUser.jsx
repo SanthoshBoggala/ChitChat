@@ -6,10 +6,10 @@ import FriendPic from '../FriendPic/FriendPic'
 const OtherUser = ({msg, user}) => {
   return (
     <div className='otherUser msg'>
-        <div className='msgBox'>
+        <div className='msgBox otherColorBox'>
             {msg}
             <FriendPic pic={""} inChat={true}/>
-        </div>
+        </div>  
     </div>
   )
 }
