@@ -51,12 +51,8 @@ export const ChatContextProvider = ({ children }) => {
     }
 
     const logOut = () => {
-        const key = "chitChat-user"
-        localStorage.removeItem(key)
 
         setNewUser("", "")
-        setCurrentChat(null)
-        setFriends([])
         setAllconvo([])
     }
 

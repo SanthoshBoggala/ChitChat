@@ -1,19 +1,22 @@
+require('dotenv').config()
+
 const http = require('http');
 const socketIO = require('socket.io');
 
 const server = http.createServer();
-
 const io = socketIO(server, { cors: { origin: "*" } });
 
+const connectDB = require('./DB')
+const { modifyUser, addUnsendMsgs, sendUnsendMsgs } = require('./controllers')
+
 const users = []
-const sendMsgs = []
 const unSendMsgs = []
 
 io.on('connection', (socket) => {
 
     console.log('A new client connected:', socket.id);
 
-    socket.on("user", (user) => {
+    socket.on("user", async (user) => {
         if(!user) return
         const userExists = users.findIndex(one => one.num == user.num)
         let newUser = {
@@ -24,6 +27,9 @@ io.on('connection', (socket) => {
         if (userExists !== -1) {
             users.splice(userExists, 1)
         }
+        await connectDB(process.env.MONGO_ATLAs_URL)
+
+        await sendUnsendMsgs(user, socket)
 
         users.push(newUser)
     })
@@ -39,20 +45,15 @@ io.on('connection', (socket) => {
             const found = users.find(d => d.num == one.num)
     
             if(found){
-                sendMsgs.push({
-                    from: user,
-                    to: one,
-                    msg,
-                    date: Date.now()
-                })
                 return found
             }
             else{
                 unSendMsgs.push({
-                    from: user,
-                    to: one,
+                    sender: user,
+                    receiver: one,
+                    friends: frnds,
                     msg,
-                    date: Date.now()
+                    time: Date.now()
                 })
                 return one
             }
@@ -61,8 +62,6 @@ io.on('connection', (socket) => {
         const frndsIds = toFrnds
         .map(one => one.id)
         .filter(id => id !== undefined)
-
-        console.log(unSendMsgs, frndsIds)
 
         if(frnds.length > 0){
             frnds.unshift(grpName)
@@ -74,7 +73,27 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', async () => {
+        console.log(users, unSendMsgs)
+
+        try{
+            await connectDB(process.env.MONGO_ATLAs_URL)
+
+            console.log("connected to mongoose db")
+
+            await modifyUser(users)
+
+            console.log("added users to db")
+
+            await addUnsendMsgs(unSendMsgs)
+
+        }
+        catch(err){
+            console.log(err);
+
+            console.log("error in saving unsend msgs and users to db")
+        }
+
         console.log('Client disconnected:', socket.id);
     });
 });
