@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Modal, Button, Form , ListGroup, FormControl} from 'react-bootstrap';
+import { Modal, Button, Form , FormControl} from 'react-bootstrap';
 import './addFrndModel.css'
 import ChatContext from '../../Contexts/chatContext';
 

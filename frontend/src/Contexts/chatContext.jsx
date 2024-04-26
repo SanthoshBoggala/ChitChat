@@ -51,9 +51,13 @@ export const ChatContextProvider = ({ children }) => {
     }
 
     const logOut = () => {
-
-        setNewUser("", "")
-        setAllconvo([])
+        setCurrentChat(() => {
+            setActive(()=>{
+                setNewUser("", "")
+                return true
+            })
+            return null
+        })
     }
 
     console.log("allconvo", allconvo)
@@ -72,34 +76,34 @@ export const ChatContextProvider = ({ children }) => {
 
                 if (found !== -1) {
                     return prev.map(one => {
-                        if(one.convoKey == convoKey){
+                        if (one.convoKey == convoKey) {
                             return ({
                                 ...one,
-                                data: [...one.data, { user: sender.num, msg} ]
+                                data: [...one.data, { user: sender.num, msg }]
                             })
                         }
                         return one
                     })
                 }
-                else{
+                else {
                     const grp = frnds.filter(one => one.num !== user.num)
 
                     const newConvo = {
                         convoKey,
                         data: [{ user: sender.num, msg }]
                     }
-                    
-                    if(frnds.length > 2){
-                        setGroups(prevGrps =>{
-                            const newGrp =  [...grp, sender]
+
+                    if (frnds.length > 2) {
+                        setGroups(prevGrps => {
+                            const newGrp = [...grp, sender]
                             console.log(newGrp)
-                            if(prevGrps && prevGrps.includes(newGrp)) return prevGrps
+                            if (prevGrps && prevGrps.includes(newGrp)) return prevGrps
                             else return [...prevGrps, newGrp]
                         })
                     } else {
                         console.log(sender)
 
-                        setFriends(old => [...old, [sender]] )
+                        setFriends(old => [...old, [sender]])
                     }
 
                     return [...prev, newConvo]

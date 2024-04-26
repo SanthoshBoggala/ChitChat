@@ -17,7 +17,7 @@ export const UserContextProvider = ({ children }) => {
     
     const setNewUser = (name, num) =>{
         if(name == "" && num == ""){
-            setUser(null)
+            setUser(() => null)
         }
         else{
             const u = { name, num}
