@@ -1,23 +1,52 @@
 .ownUser {
     display: flex;
     justify-content: end;
+    position: relative;
 }
 .otherUser {
     display: flex;
+    justify-content: start;
+    position: relative;
 }
 .msg {
-    margin: 15px 0px;
+    margin: 30px 0px;
 }
 .msgBox {
     font-size: 18px;
     padding: 5px 20px;
     color: white;
     border-radius: 20px;
-    position: relative;
 }
 .colorBox {
     background-color: rgb(24, 106, 124);
 }
 .otherColorBox {
     background-color: rgb(37, 156, 183);
+}
+.msgDate {
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+.msgDate > div {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 2px 15px;
+    border-radius: 30px;
+    background-color: rgb(27, 145, 158);
+}
+.otherMsgTime {
+    background-color: none;
+    position: absolute;
+    color: rgb(103, 103, 103);
+    left: 2%;
+    bottom: -50%;
+    font-size: 12px;   
+}
+.msgTime {
+    background-color: none;
+    position: absolute;
+    color: rgb(103, 103, 103);
+    right: 0%;
+    bottom: -50%;
+    font-size: 12px;
 }

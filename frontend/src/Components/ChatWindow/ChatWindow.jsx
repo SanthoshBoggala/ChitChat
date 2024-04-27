@@ -25,7 +25,10 @@ const ChatWindow = () => {
             </div>
             <div className='chattingBox'>
                 { (chat && chat.data && chat.data.length !== 0) && (
-                    chat.data.map((one, index) => <SingleMsg {...one} key={index}/>)
+                    chat.data.map((one, index) => {
+                        let oldMsg = index === 0 ? null : chat.data[index-1]
+                        return (<SingleMsg {...one} oldMsg={oldMsg} key={index}/>)
+                    })
                 ) }
             </div>
             <NewMsg frnds={frnd}/>

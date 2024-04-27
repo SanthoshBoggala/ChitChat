@@ -79,7 +79,7 @@ export const ChatContextProvider = ({ children }) => {
                         if (one.convoKey == convoKey) {
                             return ({
                                 ...one,
-                                data: [...one.data, { user: sender.num, msg }]
+                                data: [...one.data, { user: sender.num, msg, ...formatDateAndTime(Date.now()) }]
                             })
                         }
                         return one
@@ -90,7 +90,7 @@ export const ChatContextProvider = ({ children }) => {
 
                     const newConvo = {
                         convoKey,
-                        data: [{ user: sender.num, msg }]
+                        data: [{ user: sender.num, msg, ...formatDateAndTime(Date.now()) }]
                     }
 
                     if (frnds.length > 2) {
@@ -130,7 +130,11 @@ export const ChatContextProvider = ({ children }) => {
                 if (one.convoKey === convoKey) {
 
                     const newData = one.data
-                    newData.push({ user: user.num, msg })
+                    newData.push({ 
+                        user: user.num,
+                        msg,
+                        ...formatDateAndTime(Date.now())
+                    })
                     return { ...one, data: newData }
                 }
                 return one
@@ -170,4 +174,22 @@ const generateKey = (multiUsers) => {
     hash.update(concatNums)
 
     return hash.hex()
+}
+
+const formatDateAndTime = (msgDate) => {
+    const date = new Date(msgDate)
+    
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    
+    const formattedDate = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
+    
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+    const ampm = hours >= 12 ? 'PM' : 'AM'
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes
+    
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`
+    
+    return { date: formattedDate, time: formattedTime }
 }

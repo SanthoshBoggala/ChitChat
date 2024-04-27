@@ -3,13 +3,22 @@ import './singleMsg.css'
 import FriendPic from '../FriendPic/FriendPic'
 
 
-const OtherUser = ({msg, user}) => {
+const OtherUser = ({ msg, date, oldMsg, time }) => {
   return (
-    <div className='otherUser msg'>
+    <div>
+      {(oldMsg === null || oldMsg.date !== date) && (
+        <div className='msgDate'>
+          <div>{date}</div>
+        </div>
+      )}
+      <div className='otherUser msg'>
+        <FriendPic pic={""} inChat={true} other={true} />
         <div className='msgBox otherColorBox'>
-            {msg}
-            <FriendPic pic={""} inChat={true}/>
-        </div>  
+          {msg}
+
+        </div>
+        <div className='otherMsgTime'>{time}</div>
+      </div>
     </div>
   )
 }

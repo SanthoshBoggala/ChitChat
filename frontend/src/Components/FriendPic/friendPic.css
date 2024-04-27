@@ -13,8 +13,8 @@
 }
 .inChatProfilePic {
     position: absolute;
-    right: -10%;
-    top: -20%;
+    right: 0%;
+    top: -30%;
 
     overflow: hidden;
     background-color: rgb(178, 180, 182);
@@ -26,4 +26,7 @@
 .inChatProfilePic > img {
     width: 100%;
     padding: 100%;
+}
+.other {
+    left: 0;
 }
