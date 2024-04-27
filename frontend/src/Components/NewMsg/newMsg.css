@@ -3,7 +3,7 @@
     align-items: center;
     height: 50px;
     text-align: center;
-    background-color: rgb(128, 196, 232);
+    background: linear-gradient(to right, #225e70, #7bc2d6);
 }
 .inputMsg {
   padding-left: 20px;
@@ -13,12 +13,13 @@
     height: 40px;
     padding-left: 10px;
     border: none;
-    border-radius: 40px;
+    border-radius: 20px;
 }
 .sendMsg > button {
   border: none;
   color: white;
-  background-color: rgb(34, 128, 157);
+  font-size: 25px;
+  background:  linear-gradient(to right, #1b4957, #53a2b8);
   border-radius: 50px;
-  padding: 6px 15px;
+  padding: 2px 13px;
 }

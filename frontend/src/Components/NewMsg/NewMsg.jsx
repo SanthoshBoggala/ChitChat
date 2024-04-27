@@ -8,7 +8,7 @@ const NewMsg = ({frnds}) => {
 
     const sendMsgTo = ()=>{
         if(newMsg.length !== 0){
-            sendMsg(frnds, newMsg)
+            sendMsg(frnds, newMsg.trim())
             setNewMsg("")
         }
     }
@@ -27,7 +27,7 @@ const NewMsg = ({frnds}) => {
                 <button
                     onClick={sendMsgTo}
                 >
-                    Send
+                ➤
                 </button>
             </div>
         </div>

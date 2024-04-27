@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(14, 81, 91);
+    background: linear-gradient(to right, #184556, #51acca);
     height: 100vh;
 }
 .sideBar > div {
@@ -31,12 +31,13 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    cursor: pointer;
 }
 .logOut {
     cursor: pointer;
 }
 .active {
-    background-color: rgb(103, 107, 108) ;
+    background: linear-gradient(to right, #081d23, #7cd0ec);
     color: white;
 }
 .friendsDiv {
@@ -47,6 +48,7 @@
     height: 93vh;
     border: 1px solid gray;
     overflow: auto; 
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
 }
 
 .noConvo {

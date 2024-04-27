@@ -18,10 +18,10 @@
     border-radius: 20px;
 }
 .colorBox {
-    background-color: rgb(24, 106, 124);
+    background-color: rgb(36, 164, 193);
 }
 .otherColorBox {
-    background-color: rgb(37, 156, 183);
+    background-color: rgb(42, 127, 147);
 }
 .msgDate {
     color: white;
@@ -32,21 +32,23 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     padding: 2px 15px;
     border-radius: 30px;
-    background-color: rgb(27, 145, 158);
+    background:  linear-gradient(to right, #195061, #68c3dc);
 }
 .otherMsgTime {
+    font-family: sans-serif;
     background-color: none;
     position: absolute;
-    color: rgb(103, 103, 103);
+    color: rgb(74, 74, 74);
     left: 2%;
     bottom: -50%;
-    font-size: 12px;   
+    font-size: 10px;   
 }
 .msgTime {
+    font-family: sans-serif;
     background-color: none;
     position: absolute;
-    color: rgb(103, 103, 103);
+    color: rgb(78, 77, 77);
     right: 0%;
-    bottom: -50%;
-    font-size: 12px;
+    bottom: -45%;
+    font-size: 10px;
 }

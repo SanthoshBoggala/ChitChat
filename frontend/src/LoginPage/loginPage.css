@@ -3,10 +3,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1e272e; 
+    background: linear-gradient(to right, #134a5b, #86cfe8);
 }
 .loginDiv {
-    background-color: #34495e; 
+    background: linear-gradient(to right, #0f333e, #2fa8d1);
     color: #ecf0f1; 
     padding: 40px;
     border-radius: 5px;
@@ -25,8 +25,9 @@
     text-align: center;
 }
 .loginBtn > button {
-    background-color: #152c3b; 
+    background: linear-gradient(to right, #041216, #5dc3e5);
     border: none;
+    font-weight: 500;
     border-radius: 2px;
     letter-spacing: 2px;
     padding: 10px 20px;

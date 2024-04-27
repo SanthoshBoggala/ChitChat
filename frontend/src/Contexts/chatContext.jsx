@@ -17,8 +17,8 @@ export const ChatContextProvider = ({ children }) => {
     const [allconvo, setAllconvo] = useLocalStorage({ key: `allconvos-${user.num}`, initialValue: [] })
 
 
-    const toggleActive = () => {
-        setActive(prev => !prev)
+    const toggleActive = (flag) => {
+        setActive(prev => flag == "friends" ? true : false)
         setCurrentChat(null)
     }
 

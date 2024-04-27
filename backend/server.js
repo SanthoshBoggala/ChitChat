@@ -9,8 +9,8 @@ const io = socketIO(server, { cors: { origin: "*" } });
 const connectDB = require('./DB')
 const { modifyUser, addUnsendMsgs, sendUnsendMsgs } = require('./controllers')
 
-const users = []
-const unSendMsgs = []
+let users = []
+let unSendMsgs = []
 
 io.on('connection', (socket) => {
 
@@ -83,9 +83,13 @@ io.on('connection', (socket) => {
 
             await modifyUser(users)
 
+            users = users.filter(one => one.id != socket.id)
+
             console.log("added users to db")
 
             await addUnsendMsgs(unSendMsgs)
+
+            unSendMsgs = []
 
         }
         catch(err){

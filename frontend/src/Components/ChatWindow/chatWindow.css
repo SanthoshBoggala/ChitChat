@@ -5,13 +5,13 @@
     height: 50px;
     border: 1px solid gray;
     color: white;
-    background-color:  #317b93;
+    background: linear-gradient(to right, #0f485a, #48b1d4);
 }
 .chattingBox {
     padding: 20px;
     height: 83vh;
 
-    background-color: #ecedee;
+    background: linear-gradient(to right, #4c97a8, #f5fcff);
     overflow: auto;
 }
 .chattingBox::-webkit-scrollbar {

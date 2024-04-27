@@ -7,11 +7,11 @@
     align-items: center;
     justify-content: start;
 
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(27, 90, 101);
     height: 60px;
     text-align: center;
     cursor: pointer;
-    background-color:  #317b93;
+    background: linear-gradient(to right, #184553, #62bedd);
 }
 .name {
     max-width: 120px;
@@ -19,5 +19,6 @@
     padding-left: 15px;
 }
 .inactive {
-    background-color:  #75b1d6;
+    color: rgb(81, 81, 81);
+    background: linear-gradient(to right, #5493a6, #d1f3fe);
 }

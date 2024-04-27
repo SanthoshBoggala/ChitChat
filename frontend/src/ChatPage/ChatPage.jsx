@@ -17,25 +17,25 @@ const ChatPage = () => {
                 <div className='col-4 col-md-3 friendsDiv'>
                     <div className='friendsOutline'>
                         <div className='sideBar'>
-                            <div>@</div>
+                            <div>👤</div>
                             <div
                                 className='logOut'
                                 onClick={() => logOut()}
                             >
-                                {"<<"}
+                                ⬅️
                             </div>
                         </div>
                         <div className='friendsInside'>
                             <div className='switch row g-0'>
                                 <div
                                     className={active ? 'active col-6' : 'col-6'}
-                                    onClick={() => toggleActive()}
+                                    onClick={() => toggleActive("friends")}
                                 >
                                     Friends
                                 </div>
                                 <div
                                     className={!active ? 'active col-6' : 'col-6'}
-                                    onClick={() => toggleActive()}
+                                    onClick={() => toggleActive("groups")}
                                 >
                                     Groups
                                 </div>

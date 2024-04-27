@@ -1,5 +1,5 @@
 .profilePic {
-    background-color: rgb(178, 180, 182);
+    background: linear-gradient(to right, #1e5465, #63d8e7);
     height: 30px;
     width: 30px;
     overflow: hidden;
@@ -17,7 +17,7 @@
     top: -30%;
 
     overflow: hidden;
-    background-color: rgb(178, 180, 182);
+    background: linear-gradient(to right, #1f6074, #83dfeb);
     height: 20px;
     width: 20px;
 
