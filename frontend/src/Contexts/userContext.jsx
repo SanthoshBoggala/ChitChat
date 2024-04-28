@@ -2,7 +2,7 @@ import useLocalStorage from "../Hooks/useLocalStorage";
 import { createContext, useEffect } from "react";
 import { io } from 'socket.io-client'
 
-const socket = io('https://chitchat-server-cl9j.onrender.com')
+const socket = io('https://chit-chat-server-ten.vercel.app')
 
 const UserContext = createContext()
 
