@@ -3,7 +3,16 @@ require('dotenv').config()
 const http = require('http');
 const socketIO = require('socket.io');
 
-const server = http.createServer();
+const server = http.createServer((req, res) => {
+    // Handle HTTP requests
+    if (req.url === '/') {
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('Hello, world! This is the root path.');
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not found');
+    }
+  });
 const io = socketIO(server, { cors: { origin: "*" } });
 
 const connectDB = require('./DB')
