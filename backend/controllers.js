@@ -104,7 +104,8 @@ const sendUnsendMsgs = async(user, socket)=>{
             socket.emit("getMsg",{ 
                 user: oneMsg.sender,
                 frnds: oneMsg.friends,
-                msg: oneMsg.msg
+                msg: oneMsg.msg,
+                time: oneMsg.time
             }) 
         }
     } catch (error) {

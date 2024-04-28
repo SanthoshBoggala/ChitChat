@@ -11,10 +11,10 @@ const LoginPage = () => {
     const numRef = useRef()
 
 
-    const { setNewUser, Socket } = useContext(UserContext)
+    const { setNewUser, socket } = useContext(UserContext)
 
     useEffect(()=>{
-        Socket.on("registerDone", ()=>{
+        socket.on("registerDone", ()=>{
             setLogin(true)
         })
 

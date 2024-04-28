@@ -114,7 +114,7 @@ io.on('connection', (socket) => {
         }
 
         if (frndsIds.length != 0) {
-            socket.to(frndsIds).emit("getMsg", { user, frnds, msg })
+            socket.to(frndsIds).emit("getMsg", { user, frnds, msg, time: Date.now() })
         }
     })
 
