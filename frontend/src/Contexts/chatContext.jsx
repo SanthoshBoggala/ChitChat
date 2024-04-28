@@ -8,7 +8,7 @@ const ChatContext = createContext()
 export default ChatContext
 
 export const ChatContextProvider = ({ children }) => {
-    const { user, setNewUser, socket } = useContext(userContext)
+    const { user, setNewUser, socket, setUser } = useContext(userContext)
 
     const [active, setActive] = useLocalStorage({ key: `active-${user.num}`, initialValue: true })
     const [currentChat, setCurrentChat] = useLocalStorage({ key: `currentChat-${user.num}`, initialValue: null })
@@ -51,9 +51,12 @@ export const ChatContextProvider = ({ children }) => {
     }
 
     const logOut = () => {
+
+        socket.emit("delUserInServer", user)
+
         setCurrentChat(() => {
             setActive(()=>{
-                setNewUser("", "")
+                setUser(() => null)
                 return true
             })
             return null
@@ -64,7 +67,7 @@ export const ChatContextProvider = ({ children }) => {
     console.log("frnnds", friends)
     useEffect(() => {
 
-        const handleGetMsg = ({ user: sender, frnds, msg }) => {
+        const handleGetMsg = ({ user: sender, frnds, msg , time}) => {
 
             const convoKey = generateKey([sender, ...frnds])
 
@@ -79,7 +82,7 @@ export const ChatContextProvider = ({ children }) => {
                         if (one.convoKey == convoKey) {
                             return ({
                                 ...one,
-                                data: [...one.data, { user: sender.num, msg, ...formatDateAndTime(Date.now()) }]
+                                data: [...one.data, { user: sender.num, msg, ...formatDateAndTime(time) }]
                             })
                         }
                         return one
@@ -90,7 +93,7 @@ export const ChatContextProvider = ({ children }) => {
 
                     const newConvo = {
                         convoKey,
-                        data: [{ user: sender.num, msg, ...formatDateAndTime(Date.now()) }]
+                        data: [{ user: sender.num, msg, ...formatDateAndTime(time) }]
                     }
 
                     if (frnds.length > 2) {

@@ -7,13 +7,11 @@ const userSchema = new mongoose.Schema({
   },
   num: {
     type: String,
-    required: true,
     unique: true
   },
-  // socketId: {
-  //   type: String,
-  //   required: true,
-  // }
+  pass: {
+    type: String,
+  }
 })
 
 const User = mongoose.model('User', userSchema)

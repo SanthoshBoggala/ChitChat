@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { Modal, Button, Form , FormControl} from 'react-bootstrap';
+import { Modal, Button, Form, FormControl } from 'react-bootstrap';
 import './addFrndModel.css'
 import ChatContext from '../../Contexts/chatContext';
 
@@ -20,8 +20,8 @@ const AddFriendModal = ({ show, handleClose }) => {
     };
 
     const handleAddButtonClick = () => {
-        if(active){
-            if(number.length !== 0 && name.length !== 0 ){
+        if (active) {
+            if (number.length !== 0 && name.length !== 0) {
                 addFriend(number, name)
 
                 setNumber('');
@@ -29,10 +29,10 @@ const AddFriendModal = ({ show, handleClose }) => {
                 handleClose();
             }
         }
-        else{
+        else {
             const name = groupRef.current.value
-            if(selectedFriends.length < 2 || name.length == 0){
-                if(groups.filter(one => one.name == name)){
+            if (selectedFriends.length < 2 || name.length == 0) {
+                if (groups.filter(one => one.name == name)) {
                     console.log("group already present")
                 }
                 return
@@ -74,27 +74,28 @@ const AddFriendModal = ({ show, handleClose }) => {
                         </div>
                     ))}
                 </div>
-                <FormControl className='search' type="text" placeholder="Group Name" ref={groupRef}/>
+                <Form.Label>Group Name:</Form.Label>
+                <FormControl className='search' type="text" placeholder="Group Name" ref={groupRef} />
             </>
         );
-    };    
+    };
 
     return (
         <Modal show={show} onHide={handleClose} centered >
             <Modal.Header closeButton>
-                <Modal.Title>Add Friend</Modal.Title>
+                <Modal.Title>Add {active ? "Friend" : "Group"} </Modal.Title>
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center align-items-center">
                 <Form>
                     {active ? (
                         <>
-                            <Form.Group controlId="formNumber">
-                                <Form.Label>Number</Form.Label>
-                                <Form.Control type="text" placeholder="Enter number" value={number} onChange={handleNumberChange} />
-                            </Form.Group>
                             <Form.Group controlId="formName">
                                 <Form.Label>Name</Form.Label>
                                 <Form.Control type="text" placeholder="Enter name" value={name} onChange={handleNameChange} />
+                            </Form.Group>
+                            <Form.Group controlId="formNumber">
+                                <Form.Label>Number</Form.Label>
+                                <Form.Control type="text" placeholder="Enter number" value={number} onChange={handleNumberChange} />
                             </Form.Group>
                         </>
                     ) : (
@@ -103,7 +104,7 @@ const AddFriendModal = ({ show, handleClose }) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
+                <Button className='closeBtn' onClick={handleClose}>
                     Close
                 </Button>
                 <Button className='addOne' onClick={handleAddButtonClick}>

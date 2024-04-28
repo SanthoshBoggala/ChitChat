@@ -43,3 +43,13 @@
     letter-spacing: 1px;
     font-size: 20px;
 }
+.loginRegisterDiv {
+    text-align: center;
+    margin-top: 10px;
+}
+.loginSpan {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #112d35;
+    cursor: pointer;
+}
